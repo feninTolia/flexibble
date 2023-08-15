@@ -14,6 +14,13 @@ body {
   font-family: Inter;
 }
 
+.main-layout {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
 .flexCenter {
   @apply flex justify-center items-center;
 }
