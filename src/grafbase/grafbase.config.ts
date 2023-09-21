@@ -7,7 +7,7 @@ const User = g
     avatarUrl: g.url(),
     description: g.string().optional(),
     githubUrl: g.url().optional(),
-    linkedInUrl: g.url().optional(),
+    linkedinUrl: g.url().optional(),
     projects: g
       .relation(() => Project)
       .list()
@@ -22,6 +22,7 @@ const Project = g
   .model('Project', {
     title: g.string().length({ min: 3 }),
     description: g.string(),
+    image: g.url(),
     liveSiteUrl: g.url(),
     githubUrl: g.url(),
     category: g.string().search(),

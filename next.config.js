@@ -1,5 +1,3 @@
-const { hostname } = require('os');
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -11,6 +9,9 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+  },
+  experimental: {
+    serverComponentsExternalPackages: ['cloudinary', 'graphql-request'],
   },
 };
 

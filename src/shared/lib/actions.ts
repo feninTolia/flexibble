@@ -1,5 +1,10 @@
-import { createUserMutation, getUserQuery } from '@/graphql';
+import {
+  createProjectMutation,
+  createUserMutation,
+  getUserQuery,
+} from '@/graphql';
 import { GraphQLClient, Variables } from 'graphql-request';
+import { ProjectForm } from '../types';
 
 interface IMakeGraphQlRequestArgs {
   query: string;
@@ -51,4 +56,74 @@ export const createUser = ({
     input: { name, email, avatarUrl },
   };
   return makeGraphQlRequest({ query: createUserMutation, variables });
+};
+
+export const fetchToken = async () => {
+  try {
+    const response = await fetch(`${serverUrl}/api/auth/token`);
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const uploadImage = async (imagePath: string) => {
+  try {
+    const response = await fetch(`${serverUrl}/api/upload`, {
+      method: 'POST',
+      body: JSON.stringify({ path: imagePath }),
+    });
+
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+// export const createNewProject = async (
+//   form: ProjectForm,
+//   creatorId: string,
+//   token: string
+// ) => {
+//   const imageUrl = await uploadImage(form.image);
+
+//   if (imageUrl) {
+//     client.setHeader('Authorization', `Bearer ${token}`);
+
+//     const variables = {
+//       input: {
+//         ...form,
+//         image: imageUrl.url,
+//         createdBy: { link: creatorId },
+//       },
+//     };
+
+//     return makeGraphQlRequest({ query: createProjectMutation, variables });
+//   }
+// };
+
+export const createNewProject = async (
+  form: ProjectForm,
+  creatorId: string,
+  token: string
+) => {
+  const imageUrl = await uploadImage(form.image);
+  // console.log(' imageUrl.result.url', imageUrl.result.url);
+
+  if (imageUrl.result.url) {
+    client.setHeader('Authorization', `Bearer ${token}`);
+
+    const variables = {
+      input: {
+        ...form,
+        image: imageUrl.result.url,
+        createdBy: {
+          link: creatorId,
+        },
+      },
+    };
+    console.log('variables', variables);
+
+    return makeGraphQlRequest({ query: createProjectMutation, variables });
+  }
 };
