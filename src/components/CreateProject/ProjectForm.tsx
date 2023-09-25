@@ -36,7 +36,7 @@ const ProjectForm = ({ session, type }: IProps) => {
 
     try {
       if (type === 'create') {
-        await createNewProject(form, session?.user?.email, token);
+        await createNewProject(form, session?.user?.id, token);
         router.push('/');
       }
     } catch (e) {

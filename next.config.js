@@ -8,11 +8,17 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'http',
+        hostname: 'res.cloudinary.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
-  experimental: {
-    serverComponentsExternalPackages: ['cloudinary', 'graphql-request'],
-  },
+  // experimental: {
+  //   serverComponentsExternalPackages: ['cloudinary', 'graphql-request'],
+  // },
 };
 
 module.exports = nextConfig;
