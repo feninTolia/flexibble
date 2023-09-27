@@ -1,6 +1,7 @@
 'use client';
 import { getProviders, signIn } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
+import Button from '../Shared/Button';
 
 interface IProvider {
   id: string;
@@ -26,14 +27,18 @@ const AuthProviders = () => {
     return (
       <div>
         {Object.values(providers).map((provider, idx) => (
-          <button key={idx} onClick={() => signIn()}>
-            {provider.id}
-          </button>
+          <Button
+            title="Sign In"
+            type="button"
+            key={idx}
+            onClick={() => signIn()}
+          />
         ))}
       </div>
     );
   }
-  return <div>AuthProviders</div>;
+
+  return null;
 };
 
 export default AuthProviders;

@@ -1,9 +1,11 @@
+import ProjectActions from '@/components/Projects/ProjectActions';
+import RelatedProjects from '@/components/Projects/RelatedProjects';
 import { getProjectDetails } from '@/shared/lib/actions';
 import { getCurrentUser } from '@/shared/lib/session';
 import { ProjectInterface } from '@/shared/types';
 import Modal from '@/shared/ui/Modal/Modal';
 import Image from 'next/image';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 type Props = {
   params: { id: string };
@@ -21,22 +23,30 @@ const ProjectPage = async ({ params }: Props) => {
   }
   return (
     <Modal>
-      <section className=" w-full flex gap-4 items-center">
-        <Image
-          src={project.createdBy.avatarUrl}
-          alt="Author Avatar"
-          width={50}
-          height={50}
-          className=" rounded-full block object-cover"
-        />
-        <div className=" flex-col">
-          <span className=" font-bold">{project.title}</span>
-          <div className=" flex gap-2">
-            <span className=" text-gray">{project.createdBy.name}</span>
-            <Image src="/dot.svg" width={4} height={4} alt="dot" />
-            <span className=" text-primary-purple">{project.category}</span>
+      <section className=" w-full flex justify-between items-center">
+        <div className=" flex gap-4 items-center">
+          <Image
+            src={project.createdBy.avatarUrl}
+            alt="Author Avatar"
+            width={50}
+            height={50}
+            className=" rounded-full block object-cover"
+          />
+          <div className=" flex-col">
+            <span className=" font-bold">{project.title}</span>
+            <div className=" flex gap-2">
+              <span className=" text-gray">{project.createdBy.name}</span>
+              <Image src="/dot.svg" width={4} height={4} alt="dot" />
+              <span className=" text-primary-purple">{project.category}</span>
+            </div>
           </div>
         </div>
+
+        {session?.user.email === project.createdBy.email && (
+          <div className="flex justify-end items-center gap-2 ">
+            <ProjectActions projectId={project.id} />
+          </div>
+        )}
       </section>
 
       <section>
@@ -73,6 +83,8 @@ const ProjectPage = async ({ params }: Props) => {
         />
         <span className="w-full h-0.5 bg-light-white-200" />
       </section>
+
+      <RelatedProjects userId={project.createdBy.id} projectId={project.id} />
     </Modal>
   );
 };

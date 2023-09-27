@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import React, { MouseEventHandler, PropsWithChildren } from 'react';
 
-interface IProps extends PropsWithChildren {
+interface IProps
+  extends PropsWithChildren,
+    React.ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   type: 'button' | 'submit' | 'reset' | undefined;
   leftIcon?: string;
@@ -21,6 +23,7 @@ const Button = ({
   isSubmitting,
   bgColor,
   textColor,
+  ...props
 }: IProps) => {
   return (
     <button
@@ -30,6 +33,7 @@ const Button = ({
       ${isSubmitting ? ' bg-black/50' : bgColor || ' bg-primary-purple'}
       ${textColor || 'text-white'} `}
       onClick={handleClick}
+      {...props}
     >
       {leftIcon && <Image src={leftIcon} width={14} height={14} alt="left" />}
       {title}

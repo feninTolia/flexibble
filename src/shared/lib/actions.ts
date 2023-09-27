@@ -1,7 +1,9 @@
 import {
   createProjectMutation,
   createUserMutation,
+  deleteProjectMutation,
   getProjectByIdQuery,
+  getProjectsOfUserQuery,
   getUserQuery,
   projectsQuery,
 } from '@/graphql';
@@ -120,4 +122,21 @@ export const fetchAllProjects = async (
 export const getProjectDetails = (id: string) => {
   client.setHeader('x-api-key', apiKey);
   return makeGraphQlRequest({ query: getProjectByIdQuery, variables: { id } });
+};
+
+export const getUserProjects = (id: string, last?: string) => {
+  client.setHeader('x-api-key', apiKey);
+  return makeGraphQlRequest({
+    query: getProjectsOfUserQuery,
+    variables: { id, last },
+  });
+};
+
+export const deleteProject = (id: string, token: string) => {
+  client.setHeader('Authorization', `Bearer ${token}`);
+
+  return makeGraphQlRequest({
+    query: deleteProjectMutation,
+    variables: { id },
+  });
 };
