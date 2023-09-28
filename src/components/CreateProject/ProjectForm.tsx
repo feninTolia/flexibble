@@ -1,29 +1,34 @@
 'use client';
-import { SessionInterface } from '@/shared/types';
+import { ProjectInterface, SessionInterface } from '@/shared/types';
 import FormField from '@/shared/ui/Form/FormField';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import CustomMenu from './CustomMenu';
 import { categoryFilters } from '@/shared/constants';
 import Button from '../Shared/Button';
-import { createNewProject, fetchToken } from '@/shared/lib/actions';
+import {
+  createNewProject,
+  fetchToken,
+  updateProject,
+} from '@/shared/lib/actions';
 import { useRouter } from 'next/navigation';
 
 interface IProps {
   session: SessionInterface;
-  type: 'create' | 'edit ';
+  type: 'create' | 'edit';
+  project?: ProjectInterface;
 }
 
-const formInitialValues = {
-  image: '',
-  title: '',
-  description: '',
-  liveSiteUrl: '',
-  githubUrl: '',
-  category: '',
-};
+const ProjectForm = ({ session, type, project }: IProps) => {
+  const formInitialValues = {
+    image: project?.image || '',
+    title: project?.title || '',
+    description: project?.description || '',
+    liveSiteUrl: project?.liveSiteUrl || '',
+    githubUrl: project?.githubUrl || '',
+    category: project?.category || '',
+  };
 
-const ProjectForm = ({ session, type }: IProps) => {
   const [form, setForm] = useState(formInitialValues);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
@@ -37,6 +42,12 @@ const ProjectForm = ({ session, type }: IProps) => {
     try {
       if (type === 'create') {
         await createNewProject(form, session?.user?.id, token);
+        router.push('/');
+      }
+
+      if (type === 'edit') {
+        if (!project) return;
+        await updateProject(project.id, form, token);
         router.push('/');
       }
     } catch (e) {
