@@ -5,6 +5,7 @@ import { getCurrentUser } from '@/shared/lib/session';
 import { ProjectInterface } from '@/shared/types';
 import Modal from '@/shared/ui/Modal/Modal';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 type Props = {
@@ -35,7 +36,12 @@ const ProjectPage = async ({ params }: Props) => {
           <div className=" flex-col">
             <span className=" font-bold">{project.title}</span>
             <div className=" flex gap-2">
-              <span className=" text-gray">{project.createdBy.name}</span>
+              <Link
+                href={`/profile/${project.createdBy.id}`}
+                className=" text-gray"
+              >
+                {project.createdBy.name}
+              </Link>
               <Image src="/dot.svg" width={4} height={4} alt="dot" />
               <span className=" text-primary-purple">{project.category}</span>
             </div>
