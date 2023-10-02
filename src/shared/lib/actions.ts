@@ -152,7 +152,7 @@ export const getProjectDetails = (id: string) => {
   return makeGraphQlRequest({ query: getProjectByIdQuery, variables: { id } });
 };
 
-export const getUserProjects = (id: string, last?: string) => {
+export const getUserProjects = (id: string, last?: number) => {
   client.setHeader('x-api-key', apiKey);
   return makeGraphQlRequest({
     query: getProjectsOfUserQuery,

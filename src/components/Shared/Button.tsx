@@ -5,7 +5,7 @@ interface IProps
   extends PropsWithChildren,
     React.ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
-  type: 'button' | 'submit' | 'reset' | undefined;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   leftIcon?: string;
   rightIcon?: string;
   handleClick?: MouseEventHandler;
@@ -15,7 +15,7 @@ interface IProps
 }
 
 const Button = ({
-  type,
+  type = 'button',
   title,
   leftIcon,
   rightIcon,
