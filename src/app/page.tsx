@@ -1,4 +1,6 @@
 import ProjectCard from '@/components/Projects/ProjectCard';
+import Categories from '@/components/Shared/Categories';
+import LoadMore from '@/components/Shared/LoadMore';
 import { fetchAllProjects } from '@/shared/lib/actions';
 import { ProjectInterface } from '@/shared/types';
 
@@ -6,7 +8,7 @@ interface IProjectsSearch {
   projectSearch: {
     edges: { node: ProjectInterface }[];
     pageInfo: {
-      hasNextPag: boolean;
+      hasNextPage: boolean;
       hasPreviousPage: boolean;
       startCursor: string;
       endCursor: string;
@@ -14,14 +16,27 @@ interface IProjectsSearch {
   };
 }
 
-export default async function Home() {
-  const data = (await fetchAllProjects()) as IProjectsSearch;
+interface IProps {
+  searchParams: { category: string; endCursor?: string };
+}
+
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+export const revalidate = 0;
+
+export default async function Home({ searchParams }: IProps) {
+  const data = (await fetchAllProjects(
+    searchParams.category,
+    searchParams.endCursor
+  )) as IProjectsSearch;
   const projectsToDisplay = data?.projectSearch?.edges || [];
+  const pagination = data?.projectSearch?.pageInfo;
 
   if (projectsToDisplay.length === 0) {
     return (
-      <section className=" flexStart flex-col paddings">
-        CATEGORIES
+      <section className=" flexStart flex-col paddings w-screen">
+        <Categories />
+
         <p className=" no-result-text text-center">
           No projects found, go create some first
         </p>
@@ -29,8 +44,9 @@ export default async function Home() {
     );
   }
   return (
-    <section className="flex-start flex-col paddings mb-16">
-      <h1>Categories</h1>
+    <section className="flex-start flex-col paddings mb-16 w-screen">
+      <Categories />
+
       <section className=" projects-grid">
         {projectsToDisplay.map(({ node }) => (
           <ProjectCard
@@ -44,7 +60,12 @@ export default async function Home() {
           />
         ))}
       </section>
-      <h1>Load More</h1>
+      <LoadMore
+        startCursor={pagination.startCursor}
+        endCursor={pagination.endCursor}
+        hasPreviousPage={pagination.hasPreviousPage}
+        hasNextPage={pagination.hasNextPage}
+      />
     </section>
   );
 }
