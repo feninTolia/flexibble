@@ -103,7 +103,7 @@ const ProjectForm = ({ session, type, project }: IProps) => {
       <FormField
         title="Title"
         state={form.title}
-        placeholder="Flexibble"
+        placeholder="Trickle"
         setState={(value) => handleStateChange('title', value)}
       />
       <FormField

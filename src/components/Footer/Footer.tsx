@@ -10,15 +10,10 @@ const Footer = (props: Props) => {
     <footer className=" flexStart footer">
       <div className="flex flex-col gap-12 w-full">
         <div className=" flex items-start flex-col">
-          <Image
-            src="/logo-purple.svg"
-            alt="Flexibble"
-            width={115}
-            height={38}
-          />
+          <Image src="/logo-purple.svg" alt="Trickle" width={115} height={38} />
           <p className=" text-start text-sm font-normal mt-5 max-w-xs">
-            Flexibble is the world&#39;s leading community for creatives to
-            share, grow, and get hired.
+            Trickle is the world&#39;s leading community for creatives to share,
+            grow, and get hired.
           </p>
         </div>
 
@@ -63,7 +58,7 @@ const Footer = (props: Props) => {
       </div>
 
       <div className=" flexBetween footer_copyright">
-        <p>@ 2023 Flexibble. All rights reserved &copy; </p>
+        <p>@ 2023 Trickle. All rights reserved &copy; </p>
         <p className=" text-gray">
           <span className=" text-black font-semibold">333 </span>
           projects submitted

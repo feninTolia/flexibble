@@ -1,6 +1,6 @@
 import { Menu } from '@headlessui/react';
 import Image from 'next/image';
-import React, { Fragment } from 'react';
+import React from 'react';
 
 interface IProps {
   title: string;

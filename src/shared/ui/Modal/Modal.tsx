@@ -23,11 +23,14 @@ const Modal = ({ children }: PropsWithChildren) => {
 
   return (
     <div ref={overlay} className=" modal " onClick={handleClick}>
-      <button type="button" onClick={onDismiss} className=" top-1">
-        <Image src="/close.svg" width={17} height={17} alt="close" />
-      </button>
-
       <div ref={wrapper} className="modal_wrapper">
+        <button
+          type="button"
+          onClick={onDismiss}
+          className="absolute top-6 right-6"
+        >
+          <Image src="/close.svg" width={17} height={17} alt="close" />
+        </button>
         {children}
       </div>
     </div>
