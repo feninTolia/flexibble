@@ -37,7 +37,7 @@ export default async function Home({ searchParams }: IProps) {
       <section className=" flexStart flex-col paddings w-screen">
         <Categories />
 
-        <p className=" no-result-text text-center">
+        <p className=" no-result-text text-center min-h-[300px]">
           No projects found, go create some first
         </p>
       </section>
