@@ -1,7 +1,8 @@
 import { getServerSession } from 'next-auth/next';
 import { NextAuthOptions, User } from 'next-auth';
-// import { AdapterUser } from 'next-auth/adapters';
 import GoogleProvider from 'next-auth/providers/google';
+import GithubProvider from 'next-auth/providers/github';
+import CredentialProvider from 'next-auth/providers/credentials';
 import jsonwebtoken from 'jsonwebtoken';
 import { JWT } from 'next-auth/jwt';
 
@@ -13,6 +14,19 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    GithubProvider({
+      clientId: process.env.GITHUB_ID as string,
+      clientSecret: process.env.GITHUB_SECRET as string,
+    }),
+    CredentialProvider({
+      credentials: {
+        email: { label: 'Email', type: 'Email', required: true },
+        password: { label: 'Password', type: 'password', required: true },
+      },
+      async authorize(credentials) {
+        return null;
+      },
     }),
   ],
   jwt: {

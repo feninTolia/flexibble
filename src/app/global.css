@@ -19,6 +19,7 @@ body {
   min-height: 100dvh;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  min-width: 320px;
 }
 
 .flexCenter {
@@ -35,6 +36,9 @@ body {
 
 .text-small {
   @apply text-sm font-medium;
+}
+.textHover {
+  @apply hover:text-[#6e6d7a];
 }
 
 .paddings {
@@ -142,7 +146,7 @@ body {
 
 /* Profile Menu */
 .profile_menu-items {
-  @apply flex-col absolute right-1/2 translate-x-1/2 mt-3 p-7 sm:min-w-[300px] min-w-max rounded-xl bg-white border border-nav-border shadow-menu;
+  @apply flex-col absolute right-0  mt-3 p-7 sm:min-w-[300px] min-w-max rounded-xl bg-white border border-nav-border shadow-menu;
 }
 
 /* Profile Card */

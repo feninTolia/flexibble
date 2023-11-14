@@ -37,18 +37,19 @@ const ProjectCard = ({ title, image, name, avatarUrl, userId, id }: IProps) => {
           <p className=" w-full"> {title}</p>
         </div>
       </Link>
-      <div className=" flexBetween w-full px-2 mt-3">
-        <Link href={`/profile/${userId}`}>
-          <div className=" flexCenter gap-2">
-            <Image
-              src={avatarUrl}
-              width={24}
-              height={24}
-              alt="User image"
-              className=" rounded-full"
-            />
-            <span>{name}</span>
-          </div>
+
+      <div className="flexBetween w-full px-2 mt-3 gap-2">
+        <Link href={`/profile/${userId}`} className="flexCenter gap-2">
+          <Image
+            src={avatarUrl}
+            width={24}
+            height={24}
+            alt="User image"
+            className=" rounded-full"
+          />
+          <span className="text-sm overflow-hidden text-ellipsis whitespace-nowrap">
+            {name}
+          </span>
         </Link>
 
         <div className=" flexCenter gap-3">

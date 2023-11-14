@@ -21,17 +21,22 @@ const ProfilePage = ({ user }: Props) => (
         />
         <p className="text-4xl font-bold mt-10">{user?.name}</p>
         <p className="md:text-5xl text-3xl font-extrabold md:mt-10 mt-5 max-w-lg">
-          I’m Software Engineer at JSM 👋
+          I’m Junior Frontend Developer 👋
         </p>
 
         <div className="flex mt-8 gap-5 w-full flex-wrap">
-          <Button
-            title="Follow"
-            leftIcon="/plus-round.svg"
-            bgColor="bg-light-white-400 !w-max"
-            textColor="text-black-100"
-          />
-          <Link href={`mailto:${user?.email}`}>
+          <Link
+            target="_blank"
+            href={'https://www.linkedin.com/in/anatolii-fenin/'}
+          >
+            <Button
+              title="Follow"
+              leftIcon="/plus-round.svg"
+              bgColor="bg-light-white-400 !w-max"
+              textColor="text-black-100"
+            />
+          </Link>
+          <Link target="_blanc" href={`mailto:${user?.email}`}>
             <Button title="Hire Me" leftIcon="/email.svg" />
           </Link>
         </div>

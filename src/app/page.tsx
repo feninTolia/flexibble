@@ -1,5 +1,6 @@
 import ProjectCard from '@/components/Projects/ProjectCard';
 import Categories from '@/components/Shared/Categories';
+import { categoryFilters } from '@/shared/constants';
 import LoadMore from '@/components/Shared/LoadMore';
 import { fetchAllProjects } from '@/shared/lib/actions';
 import { ProjectInterface } from '@/shared/types';
@@ -20,13 +21,9 @@ interface IProps {
   searchParams: { category: string; endCursor?: string };
 }
 
-export const dynamic = 'force-dynamic';
-export const dynamicParams = true;
-export const revalidate = 0;
-
 export default async function Home({ searchParams }: IProps) {
   const data = (await fetchAllProjects(
-    searchParams.category,
+    searchParams.category ?? categoryFilters.at(0),
     searchParams.endCursor
   )) as IProjectsSearch;
   const projectsToDisplay = data?.projectSearch?.edges || [];
@@ -34,7 +31,7 @@ export default async function Home({ searchParams }: IProps) {
 
   if (projectsToDisplay.length === 0) {
     return (
-      <section className=" flexStart flex-col paddings w-screen">
+      <section className=" flexStart flex-col paddings w-screen min-w-[320px]">
         <Categories />
 
         <p className=" no-result-text text-center min-h-[300px]">
@@ -44,7 +41,7 @@ export default async function Home({ searchParams }: IProps) {
     );
   }
   return (
-    <section className="flex-start flex-col paddings mb-16 w-screen">
+    <section className="flex-start flex-col paddings mb-16 w-screen min-w-[320px]">
       <Categories />
 
       <section className=" projects-grid">

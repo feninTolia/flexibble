@@ -3,9 +3,7 @@ import React from 'react';
 import FooterColumn from './FooterColumn';
 import { footerLinks } from '@/shared/constants';
 
-type Props = {};
-
-const Footer = (props: Props) => {
+const Footer = () => {
   return (
     <footer className=" flexStart footer">
       <div className="flex flex-col gap-12 w-full">
@@ -59,10 +57,6 @@ const Footer = (props: Props) => {
 
       <div className=" flexBetween footer_copyright">
         <p>@ 2023 Trickle. All rights reserved &copy; </p>
-        <p className=" text-gray">
-          <span className=" text-black font-semibold">333 </span>
-          projects submitted
-        </p>
       </div>
     </footer>
   );

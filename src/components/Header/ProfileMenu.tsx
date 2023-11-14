@@ -17,8 +17,8 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
           {session?.user?.image && (
             <Image
               src={session.user.image}
-              width={40}
-              height={40}
+              width={45}
+              height={45}
               className="rounded-full"
               alt="user profile image"
             />
@@ -55,14 +55,17 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
 
             <div className="flex flex-col gap-3 pt-10 items-start w-full">
               <Menu.Item>
-                <Link href={`/profile/${session.user.id}`} className="text-sm">
+                <Link
+                  href={`/profile/${session.user.id}`}
+                  className="text-sm textHover"
+                >
                   Work Preferences
                 </Link>
               </Menu.Item>
               <Menu.Item>
                 <Link
                   href={`/profile/${session?.user?.id}`}
-                  className="text-sm"
+                  className="text-sm textHover"
                 >
                   Settings
                 </Link>
@@ -70,7 +73,7 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
               <Menu.Item>
                 <Link
                   href={`/profile/${session?.user?.id}`}
-                  className="text-sm"
+                  className="text-sm textHover"
                 >
                   Profile
                 </Link>
@@ -80,7 +83,7 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
               <Menu.Item>
                 <button
                   type="button"
-                  className="text-sm"
+                  className="text-sm textHover"
                   onClick={() => signOut()}
                 >
                   Sign out

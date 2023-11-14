@@ -27,7 +27,7 @@ const Modal = ({ children }: PropsWithChildren) => {
         <button
           type="button"
           onClick={onDismiss}
-          className="absolute top-6 right-6"
+          className="absolute top-6 right-6 hover:scale-105 transition-transform"
         >
           <Image src="/close.svg" width={17} height={17} alt="close" />
         </button>
