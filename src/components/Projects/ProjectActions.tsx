@@ -38,7 +38,7 @@ const ProjectActions = ({ projectId }: Props) => {
       <button
         type="button"
         className={` flexCenter delete-action_btn min-w-[40px] ${
-          isDeleting ? 'bg - gray' : ' bg-primary-purple'
+          isDeleting ? 'bg-gray' : ' bg-primary-purple'
         }`}
         onClick={handleDeleteProject}
       >

@@ -23,15 +23,17 @@ const Button = ({
   isSubmitting,
   bgColor,
   textColor,
+  className,
   ...props
 }: IProps) => {
   return (
     <button
       type={type || 'button'}
       disabled={isSubmitting}
-      className={`flexCenter gap-3 px-4 py-3 rounded-xl text-sm font-medium max-md:w-full
+      className={`flexCenter gap-3 px-4 py-3 rounded-xl text-sm font-medium hover:brightness-110 transition-all max-md:w-full
       ${isSubmitting ? ' bg-black/50' : bgColor || ' bg-primary-purple'}
-      ${textColor || 'text-white'} `}
+      ${textColor || 'text-white'} 
+      ${className}`}
       onClick={handleClick}
       {...props}
     >

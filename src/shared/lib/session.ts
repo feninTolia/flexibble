@@ -53,9 +53,9 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async session({ session }) {
-      const email = session?.user?.email as string;
-
       try {
+        const email = session?.user?.email as string;
+
         const data = (await getUser(email)) as { user?: UserProfile };
 
         const newSession = {

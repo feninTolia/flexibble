@@ -84,7 +84,10 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
                 <button
                   type="button"
                   className="text-sm textHover"
-                  onClick={() => signOut()}
+                  onClick={() => {
+                    setOpenModal(false);
+                    signOut();
+                  }}
                 >
                   Sign out
                 </button>

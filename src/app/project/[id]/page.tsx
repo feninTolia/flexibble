@@ -1,5 +1,6 @@
 import ProjectActions from '@/components/Projects/ProjectActions';
 import RelatedProjects from '@/components/Projects/RelatedProjects';
+import ErrorText from '@/components/Shared/ErrorText';
 import { getProjectDetails } from '@/shared/lib/actions';
 import { getCurrentUser } from '@/shared/lib/session';
 import { ProjectInterface } from '@/shared/types';
@@ -15,13 +16,16 @@ type Props = {
 const ProjectPage = async ({ params }: Props) => {
   const session = await getCurrentUser();
 
-  const { project } = (await getProjectDetails(params.id)) as {
+  const data = (await getProjectDetails(params.id)) as {
     project: ProjectInterface;
   };
 
-  if (!project) {
-    return <p>Failed to fetch project information</p>;
+  if (!data) {
+    return <ErrorText>Failed to fetch project information</ErrorText>;
   }
+
+  const project = data.project;
+
   return (
     <Modal>
       <section className=" w-full flex justify-between items-center">

@@ -4,6 +4,7 @@ import { categoryFilters } from '@/shared/constants';
 import LoadMore from '@/components/Shared/LoadMore';
 import { fetchAllProjects } from '@/shared/lib/actions';
 import { ProjectInterface } from '@/shared/types';
+import ErrorText from '@/components/Shared/ErrorText';
 
 interface IProjectsSearch {
   projectSearch: {
@@ -34,9 +35,7 @@ export default async function Home({ searchParams }: IProps) {
       <section className=" flexStart flex-col paddings w-screen min-w-[320px]">
         <Categories />
 
-        <p className=" no-result-text text-center min-h-[300px]">
-          No projects found, go create some first
-        </p>
+        <ErrorText>No projects found, go create some first</ErrorText>
       </section>
     );
   }
