@@ -31,13 +31,13 @@ const ProjectActions = ({ projectId }: Props) => {
     <>
       <Link
         href={`/edit-project/${projectId}`}
-        className=" flexCenter edit-action_btn"
+        className=" flexCenter edit-action_btn min-w-[40px]"
       >
         <Image src="/pencile.svg" width={15} height={15} alt="edit" />
       </Link>
       <button
         type="button"
-        className={` flexCenter delete-action_btn ${
+        className={` flexCenter delete-action_btn min-w-[40px] ${
           isDeleting ? 'bg - gray' : ' bg-primary-purple'
         }`}
         onClick={handleDeleteProject}

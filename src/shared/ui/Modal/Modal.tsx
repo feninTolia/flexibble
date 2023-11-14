@@ -22,7 +22,7 @@ const Modal = ({ children }: PropsWithChildren) => {
   );
 
   return (
-    <div ref={overlay} className=" modal " onClick={handleClick}>
+    <div ref={overlay} className=" modal min-w-[320px]" onClick={handleClick}>
       <div ref={wrapper} className="modal_wrapper">
         <button
           type="button"

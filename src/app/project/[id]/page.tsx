@@ -33,17 +33,25 @@ const ProjectPage = async ({ params }: Props) => {
             height={50}
             className=" rounded-full block object-cover"
           />
-          <div className=" flex-col">
-            <span className=" font-bold">{project.title}</span>
-            <div className=" flex gap-2">
+          <div className="flex-col">
+            <span className="font-bold">{project.title}</span>
+            <div className="flex gap-2">
               <Link
                 href={`/profile/${project.createdBy.id}`}
-                className=" text-gray"
+                className=" text-gray overflow-hidden text-ellipsis whitespace-nowrap"
               >
                 {project.createdBy.name}
               </Link>
-              <Image src="/dot.svg" width={4} height={4} alt="dot" />
-              <span className=" text-primary-purple">{project.category}</span>
+              <Image
+                src="/dot.svg"
+                width={4}
+                height={4}
+                alt="dot"
+                className="max-sm:hidden"
+              />
+              <span className="max-sm:hidden text-primary-purple">
+                {project.category}
+              </span>
             </div>
           </div>
         </div>
