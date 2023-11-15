@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 import AuthProviders from '../Auth/AuthProviders';
 import { getCurrentUser } from '@/shared/lib/session';
-import ProfileMenu from './ProfileMenu';
+import ShareProject from './ShareProject';
 
 const Navbar = async () => {
   const session = await getCurrentUser();
@@ -25,16 +25,7 @@ const Navbar = async () => {
       </div>
 
       <div className=" flexCenter gap-4">
-        {session?.user ? (
-          <>
-            <Link href="/create-project" className=" font-medium textHover">
-              Share work
-            </Link>
-            <ProfileMenu session={session} />
-          </>
-        ) : (
-          <AuthProviders />
-        )}
+        {session?.user ? <ShareProject session={session} /> : <AuthProviders />}
       </div>
     </nav>
   );

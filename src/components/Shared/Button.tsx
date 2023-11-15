@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React, { MouseEventHandler, PropsWithChildren } from 'react';
+import Spinner from './Spinner';
 
 interface IProps
   extends PropsWithChildren,
@@ -12,6 +13,7 @@ interface IProps
   isSubmitting?: boolean;
   bgColor?: string;
   textColor?: string;
+  loading?: boolean;
 }
 
 const Button = ({
@@ -24,9 +26,12 @@ const Button = ({
   bgColor,
   textColor,
   className,
+  loading,
   ...props
 }: IProps) => {
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <button
       type={type || 'button'}
       disabled={isSubmitting}

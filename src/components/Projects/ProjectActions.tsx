@@ -4,12 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import Spinner from '../Shared/Spinner';
 
 type Props = {
   projectId: string;
 };
 
 const ProjectActions = ({ projectId }: Props) => {
+  const [isEditLoading, setIsEditLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
@@ -32,8 +34,13 @@ const ProjectActions = ({ projectId }: Props) => {
       <Link
         href={`/edit-project/${projectId}`}
         className=" flexCenter edit-action_btn min-w-[40px]"
+        onClick={() => setIsEditLoading(true)}
       >
-        <Image src="/pencile.svg" width={15} height={15} alt="edit" />
+        {isEditLoading ? (
+          <Spinner size="15" />
+        ) : (
+          <Image src="/pencile.svg" width={15} height={15} alt="edit" />
+        )}
       </Link>
       <button
         type="button"
@@ -41,6 +48,7 @@ const ProjectActions = ({ projectId }: Props) => {
           isDeleting ? 'bg-gray' : ' bg-primary-purple'
         }`}
         onClick={handleDeleteProject}
+        disabled={isDeleting}
       >
         <Image src="/trash.svg" width={15} height={15} alt="delete" />
       </button>

@@ -24,9 +24,10 @@ interface IProps {
 
 export default async function Home({ searchParams }: IProps) {
   const data = (await fetchAllProjects(
-    searchParams.category ?? categoryFilters.at(0),
+    searchParams.category,
     searchParams.endCursor
   )) as IProjectsSearch;
+
   const projectsToDisplay = data?.projectSearch?.edges || [];
   const pagination = data?.projectSearch?.pageInfo;
 

@@ -28,7 +28,7 @@ const Categories = () => {
               onClick={() => handleTags(category)}
               className={`${
                 category === selectedCategory &&
-                ' bg-light-white-300 hover:text-black hover:brightness-95'
+                ' bg-light-white-300 hover:text-black hover:brightness-95 '
               } font-medium px-4 py-3 rounded-lg capitalize whitespace-nowrap textHover transition-all`}
             >
               {category}
