@@ -8,8 +8,8 @@ export const NavLinks = [
 
 export const categoryFilters = [
   'Frontend',
-  'Backend',
   'Full-Stack',
+  'Backend',
   'Mobile',
   'UI/UX',
   'Game Dev',
