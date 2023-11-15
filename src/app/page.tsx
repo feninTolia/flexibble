@@ -1,6 +1,5 @@
 import ProjectCard from '@/components/Projects/ProjectCard';
 import Categories from '@/components/Shared/Categories';
-import { categoryFilters } from '@/shared/constants';
 import LoadMore from '@/components/Shared/LoadMore';
 import { fetchAllProjects } from '@/shared/lib/actions';
 import { ProjectInterface } from '@/shared/types';

@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import Spinner from '../Shared/Spinner';
 
 interface IProps {
   id: string;
@@ -15,6 +16,7 @@ interface IProps {
 const ProjectCard = ({ title, image, name, avatarUrl, userId, id }: IProps) => {
   const [randomLikes, setRandomLikes] = useState(0);
   const [randomViews, setRandomViews] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setRandomLikes(Math.floor(Math.random() * 1000));
@@ -25,6 +27,7 @@ const ProjectCard = ({ title, image, name, avatarUrl, userId, id }: IProps) => {
       <Link
         href={`/project/${id}`}
         className=" flexCenter group relative w-full h-full"
+        onClick={() => setIsLoading(true)}
       >
         <Image
           src={image}
@@ -35,6 +38,7 @@ const ProjectCard = ({ title, image, name, avatarUrl, userId, id }: IProps) => {
         />
         <div className=" hidden group-hover:flex profile_card-title">
           <p className=" w-full"> {title}</p>
+          {isLoading && <Spinner />}
         </div>
       </Link>
 
