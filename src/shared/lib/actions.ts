@@ -174,8 +174,6 @@ export const getProjectDetails = (id: string) => {
 
 export const getUserProjects = (email: string) => {
   client.setHeader('x-api-key', apiKey);
-  console.log(email);
-
   return makeGraphQlRequest({
     query: getProjectsOfUserQuery,
     variables: { email },

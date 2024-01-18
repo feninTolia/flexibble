@@ -25,8 +25,6 @@ const ProjectPage = async ({ params }: Props) => {
   }
 
   const project = data.mongoDB.project;
-  console.log(project);
-
   return (
     <Modal>
       <section className=" w-full flex justify-between items-center">
