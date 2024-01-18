@@ -5,9 +5,8 @@ import GithubProvider from 'next-auth/providers/github';
 import CredentialProvider from 'next-auth/providers/credentials';
 import jsonwebtoken from 'jsonwebtoken';
 import { JWT } from 'next-auth/jwt';
-
-import { createUser, getUser } from './actions';
 import { SessionInterface, UserProfile } from '../types';
+// import { createUser, getUser } from './actions';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,8 +15,8 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
     GithubProvider({
-      clientId: process.env.GITHUB_ID as string,
-      clientSecret: process.env.GITHUB_SECRET as string,
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
     }),
     CredentialProvider({
       credentials: {
@@ -25,6 +24,8 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password', required: true },
       },
       async authorize(credentials) {
+        console.log('Login credentials - ', credentials);
+
         return null;
       },
     }),
@@ -54,15 +55,14 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async session({ session }) {
       try {
-        const email = session?.user?.email as string;
-
-        const data = (await getUser(email)) as { user?: UserProfile };
+        // const email = session?.user?.email as string;
+        // const data = (await getUser(email)) as { user?: UserProfile };
 
         const newSession = {
           ...session,
           user: {
             ...session.user,
-            ...data?.user,
+            // ...data?.user,
           },
         };
 
@@ -74,17 +74,17 @@ export const authOptions: NextAuthOptions = {
     },
     async signIn({ user }: { user: User }) {
       try {
-        const userExists = (await getUser(user?.email as string)) as {
-          user?: UserProfile;
-        };
+        // const userExists = (await getUser(user?.email as string)) as {
+        //   user?: UserProfile;
+        // };
 
-        if (!userExists.user) {
-          await createUser({
-            name: user.name as string,
-            email: user.email as string,
-            avatarUrl: user.image as string,
-          });
-        }
+        // if (!userExists?.user) {
+        //   await createUser({
+        //     name: user.name as string,
+        //     email: user.email as string,
+        //     avatarUrl: user.image as string,
+        //   });
+        // }
 
         return true;
       } catch (error: any) {

@@ -2,20 +2,8 @@ import ProjectCard from '@/components/Projects/ProjectCard';
 import Categories from '@/components/Shared/Categories';
 import LoadMore from '@/components/Shared/LoadMore';
 import { fetchAllProjects } from '@/shared/lib/actions';
-import { ProjectInterface } from '@/shared/types';
+import { IProjectsSearch } from '@/shared/types';
 import ErrorText from '@/components/Shared/ErrorText';
-
-interface IProjectsSearch {
-  projectSearch: {
-    edges: { node: ProjectInterface }[];
-    pageInfo: {
-      hasNextPage: boolean;
-      hasPreviousPage: boolean;
-      startCursor: string;
-      endCursor: string;
-    };
-  };
-}
 
 interface IProps {
   searchParams: { category: string; endCursor?: string };
@@ -27,8 +15,8 @@ export default async function Home({ searchParams }: IProps) {
     searchParams.endCursor
   )) as IProjectsSearch;
 
-  const projectsToDisplay = data?.projectSearch?.edges || [];
-  const pagination = data?.projectSearch?.pageInfo;
+  const projectsToDisplay = data?.mongoDB.projectCollection.edges || [];
+  const pagination = data?.mongoDB.projectCollection?.pageInfo;
 
   if (projectsToDisplay.length === 0) {
     return (
@@ -52,7 +40,7 @@ export default async function Home({ searchParams }: IProps) {
             image={node.image}
             name={node.createdBy.name}
             avatarUrl={node.createdBy.avatarUrl}
-            userId={node.createdBy.id}
+            email={node.createdBy.email}
           />
         ))}
       </section>

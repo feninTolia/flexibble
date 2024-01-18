@@ -1,5 +1,4 @@
 'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
 import { signOut } from 'next-auth/react';
@@ -56,7 +55,7 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
             <div className="flex flex-col gap-3 pt-10 items-start w-full">
               <Menu.Item>
                 <Link
-                  href={`/profile/${session.user.id}`}
+                  href={`/profile/${session.user.email}`}
                   className="text-sm textHover"
                 >
                   Work Preferences
@@ -64,7 +63,7 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
               </Menu.Item>
               <Menu.Item>
                 <Link
-                  href={`/profile/${session?.user?.id}`}
+                  href={`/profile/${session?.user?.email}`}
                   className="text-sm textHover"
                 >
                   Settings
@@ -72,7 +71,7 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
               </Menu.Item>
               <Menu.Item>
                 <Link
-                  href={`/profile/${session?.user?.id}`}
+                  href={`/profile/${session?.user?.email}`}
                   className="text-sm textHover"
                 >
                   Profile

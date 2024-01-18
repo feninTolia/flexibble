@@ -41,13 +41,14 @@ const ProjectForm = ({ session, type, project }: IProps) => {
 
     try {
       if (type === 'create') {
-        await createNewProject(form, session?.user?.id, token);
+        await createNewProject(form, session?.user, token);
         router.push('/');
       }
 
       if (type === 'edit') {
         if (!project) return;
         await updateProject(project.id, form, token);
+
         router.push('/');
       }
     } catch (e) {

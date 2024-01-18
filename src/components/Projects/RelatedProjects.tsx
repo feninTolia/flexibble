@@ -1,22 +1,23 @@
 import { getUserProjects } from '@/shared/lib/actions';
-import { UserProfile } from '@/shared/types';
+import { IProjectsSearch } from '@/shared/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
 type Props = {
-  userId: string;
+  email: string;
   projectId: string;
 };
 
-const RelatedProjects = async ({ userId, projectId }: Props) => {
-  const { user } = (await getUserProjects(userId)) as { user?: UserProfile };
-
-  if (!user) {
+const RelatedProjects = async ({ email, projectId }: Props) => {
+  const data = (await getUserProjects(email)) as IProjectsSearch;
+  const user = data?.mongoDB.projectCollection.edges.at(0)?.node.createdBy;
+  const projects = data?.mongoDB.projectCollection.edges;
+  if (!user || projects.length < 2) {
     return null;
   }
 
-  const filteredProjects = user.projects.edges.filter(
+  const filteredProjects = data.mongoDB.projectCollection.edges.filter(
     (project) => project.node.id !== projectId
   );
 
@@ -27,7 +28,7 @@ const RelatedProjects = async ({ userId, projectId }: Props) => {
           More by {user.name}
         </p>
         <Link
-          href={`/profile/${user.id}`}
+          href={`/profile/${user.email}`}
           className=" text-base text-primary-purple whitespace-nowrap"
         >
           View all

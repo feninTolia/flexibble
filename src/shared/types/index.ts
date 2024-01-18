@@ -1,5 +1,19 @@
 import { User, Session } from 'next-auth';
 
+export interface IProjectsSearch {
+  mongoDB: {
+    projectCollection: {
+      edges: { node: ProjectInterface }[];
+      pageInfo: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor: string;
+        endCursor: string;
+      };
+    };
+  };
+}
+
 export type FormState = {
   title: string;
   description: string;

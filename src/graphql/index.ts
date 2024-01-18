@@ -1,92 +1,70 @@
 export const createProjectMutation = `
-	mutation CreateProject($input: ProjectCreateInput!) {
-		projectCreate(input: $input) {
-			project {
-				id
-				title
-				description
-				createdBy {
-					email
-					name
-				}
-			}
-		}
-	}
+mutation CreateProject(
+  $input: ProjectCreateInput!
+) {
+  mongoDB {
+    projectCreate(input: $input) {
+      insertedId
+    }
+  }
+}
 `;
 
 export const updateProjectMutation = `
 	mutation UpdateProject($id: ID!, $input: ProjectUpdateInput!) {
+   mongoDB {
 		projectUpdate(by: { id: $id }, input: $input) {
-			project {
-				id
-				title
-				description
-				createdBy {
-					email
-					name
-				}
-			}
+		  matchedCount
 		}
+   }
 	}
 `;
 
 export const deleteProjectMutation = `
   mutation DeleteProject($id: ID!) {
+   mongoDB {
     projectDelete(by: { id: $id }) {
-      deletedId
+      deletedCount
     }
+   }
   }
 `;
 
-export const createUserMutation = `
-	mutation CreateUser($input: UserCreateInput!) {
-		userCreate(input: $input) {
-			user {
-				name
-				email
-				avatarUrl
-				description
-				githubUrl
-				linkedinUrl
-				id
-			}
-		}
-	}
-`;
-
 export const allProjectsQuery = `
- query getProjects( $endCursor: String) {
-  projectSearch(first: 15, after: $endCursor) {
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
+query GetAllProjects ($endCursor: String) {
+  mongoDB {
+    projectCollection(first: 15, after: $endCursor) {
+         pageInfo {
+         hasNextPage
+         hasPreviousPage
+         startCursor
+         endCursor
       }
       edges {
         node {
-          title
-          githubUrl
-          description
-          liveSiteUrl
           id
+          title
+          description
           image
+          liveSiteUrl
+          githubUrl
           category
           createdBy {
-            id
-            email
             name
+            email
             avatarUrl
           }
         }
       }
     }
   }
+}
 `;
 
 export const projectsQuery = `
  query getProjects($category: String, $endCursor: String) {
-  projectSearch(first: 15, after: $endCursor, filter: {category: {eq: $category}}) {
+    mongoDB {
+  projectCollection(first: 15, after: $endCursor, filter: {category: {eq: $category}}) {
       pageInfo {
         hasNextPage
         hasPreviousPage
@@ -103,7 +81,6 @@ export const projectsQuery = `
           image
           category
           createdBy {
-            id
             email
             name
             avatarUrl
@@ -112,11 +89,13 @@ export const projectsQuery = `
       }
     }
   }
+  }
 `;
 
 export const getProjectByIdQuery = `
-  query GetProjectById($id: ID!) {
-    project(by: { id: $id }) {
+query GetProjectById ($id: ID!) {
+  mongoDB {
+    project(by: {id:$id}) {
       id
       title
       description
@@ -125,17 +104,28 @@ export const getProjectByIdQuery = `
       githubUrl
       category
       createdBy {
-        id
-        name
         email
+        name
         avatarUrl
       }
     }
   }
+}
+`;
+
+export const createUserMutation = `
+	mutation MongoDB ($input: UserCreateInput!) {
+  mongoDB {
+    userCreate(input: $input) {
+      insertedId,
+    }
+  }
+}
 `;
 
 export const getUserQuery = `
   query GetUser($email: String!) {
+   mongoDB {
     user(by: { email: $email }) {
       id
       name
@@ -146,27 +136,30 @@ export const getUserQuery = `
       linkedinUrl
     }
   }
+  }
 `;
 
 export const getProjectsOfUserQuery = `
-  query getUserProjects($id: ID!, $last: Int = 4) {
-    user(by: { id: $id }) {
-      id
-      name
-      email
-      description
-      avatarUrl
-      githubUrl
-      linkedinUrl
-      projects(last: $last) {
-        edges {
-          node {
-            id
-            title
-            image
+query GetUserProjectByEmail ($email:String!) {
+  mongoDB {
+    projectCollection(filter: {createdBy:{email:{eq:$email}}}, first: 50) {
+      edges {
+        node {
+          title
+          id
+          description
+          image
+          liveSiteUrl
+          githubUrl
+          category
+          createdBy {
+            name
+            email
+            avatarUrl
           }
         }
       }
     }
   }
+}
 `;

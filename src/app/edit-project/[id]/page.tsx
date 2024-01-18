@@ -11,18 +11,20 @@ interface IProps {
 }
 
 const EditProjectPage = async ({ params }: IProps) => {
-  const session = await getCurrentUser();
-
-  if (!session?.user) redirect('/');
-
-  const { project } = (await getProjectDetails(params.id)) as {
-    project: ProjectInterface;
+  const data = (await getProjectDetails(params.id)) as {
+    mongoDB: { project: ProjectInterface };
   };
+  const session = await getCurrentUser();
+  if (!session?.user) redirect('/');
 
   return (
     <Modal>
       <h3 className=" modal-head-text">Edit Project</h3>
-      <ProjectForm type="edit" session={session} project={project} />
+      <ProjectForm
+        type="edit"
+        session={session}
+        project={data?.mongoDB.project}
+      />
     </Modal>
   );
 };

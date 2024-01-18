@@ -10,10 +10,10 @@ interface IProps {
   image: string;
   name: string;
   avatarUrl: string;
-  userId: string;
+  email: string;
 }
 
-const ProjectCard = ({ title, image, name, avatarUrl, userId, id }: IProps) => {
+const ProjectCard = ({ title, image, name, avatarUrl, email, id }: IProps) => {
   const [randomLikes, setRandomLikes] = useState(0);
   const [randomViews, setRandomViews] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +43,7 @@ const ProjectCard = ({ title, image, name, avatarUrl, userId, id }: IProps) => {
       </Link>
 
       <div className="flexBetween w-full px-2 mt-3 gap-2">
-        <Link href={`/profile/${userId}`} className="flexCenter gap-2">
+        <Link href={`/profile/${email}`} className="flexCenter gap-2">
           <Image
             src={avatarUrl}
             width={24}

@@ -14,17 +14,18 @@ type Props = {
 };
 
 const ProjectPage = async ({ params }: Props) => {
-  const session = await getCurrentUser();
-
   const data = (await getProjectDetails(params.id)) as {
-    project: ProjectInterface;
+    mongoDB: { project: ProjectInterface };
   };
 
-  if (!data) {
+  const session = await getCurrentUser();
+
+  if (!data.mongoDB.project) {
     return <ErrorText>Failed to fetch project information</ErrorText>;
   }
 
-  const project = data.project;
+  const project = data.mongoDB.project;
+  console.log(project);
 
   return (
     <Modal>
@@ -41,7 +42,7 @@ const ProjectPage = async ({ params }: Props) => {
             <span className="font-bold">{project.title}</span>
             <div className="flex gap-2">
               <Link
-                href={`/profile/${project.createdBy.id}`}
+                href={`/profile/${project.createdBy.email}`}
                 className=" text-gray overflow-hidden text-ellipsis whitespace-nowrap"
               >
                 {project.createdBy.name}
@@ -102,7 +103,7 @@ const ProjectPage = async ({ params }: Props) => {
         <span className="w-full h-0.5 bg-light-white-200" />
       </section>
 
-      <RelatedProjects userId={project.createdBy.id} projectId={project.id} />
+      <RelatedProjects email={project.createdBy.email} projectId={project.id} />
     </Modal>
   );
 };

@@ -11,6 +11,7 @@ import {
 } from '@/graphql';
 import { GraphQLClient, Variables } from 'graphql-request';
 import { ProjectForm } from '../types';
+import { DefaultUser } from 'next-auth';
 
 interface IMakeGraphQlRequestArgs {
   query: string;
@@ -38,7 +39,7 @@ const makeGraphQlRequest = async ({
     // client request
     return await client.request(query, variables);
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 
@@ -61,6 +62,7 @@ export const createUser = ({
   const variables = {
     input: { name, email, avatarUrl },
   };
+
   return makeGraphQlRequest({ query: createUserMutation, variables });
 };
 
@@ -88,7 +90,7 @@ export const uploadImage = async (imagePath: string) => {
 
 export const createNewProject = async (
   form: ProjectForm,
-  creatorId: string,
+  user: DefaultUser,
   token: string
 ) => {
   const imageUrl = await uploadImage(form.image);
@@ -101,7 +103,9 @@ export const createNewProject = async (
         ...form,
         image: imageUrl.result.url,
         createdBy: {
-          link: creatorId,
+          name: user?.name,
+          email: user?.email,
+          avatarUrl: user?.image,
         },
       },
     };
@@ -119,12 +123,19 @@ export const updateProject = async (
     const base64Regex = /^data:image\/[a-z]+;base64,/;
     return base64Regex.test(value);
   }
-  let updatedForm = { ...form };
+  let updatedForm = {
+    title: { set: form.title },
+    description: { set: form.description },
+    image: { set: form.image },
+    liveSiteUrl: { set: form.liveSiteUrl },
+    githubUrl: { set: form.githubUrl },
+    category: { set: form.category },
+  };
   const isUploadingNewImage = isBase64DataURL(form.image);
 
   if (isUploadingNewImage) {
     const imageUrl = await uploadImage(form.image);
-    updatedForm = { ...form, image: imageUrl.result.url };
+    updatedForm = { ...updatedForm, image: { set: imageUrl.result.url } };
   }
 
   client.setHeader('Authorization', `Bearer ${token}`);
@@ -161,11 +172,13 @@ export const getProjectDetails = (id: string) => {
   return makeGraphQlRequest({ query: getProjectByIdQuery, variables: { id } });
 };
 
-export const getUserProjects = (id: string, last?: number) => {
+export const getUserProjects = (email: string) => {
   client.setHeader('x-api-key', apiKey);
+  console.log(email);
+
   return makeGraphQlRequest({
     query: getProjectsOfUserQuery,
-    variables: { id, last },
+    variables: { email },
   });
 };
 

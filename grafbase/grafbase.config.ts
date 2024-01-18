@@ -1,6 +1,36 @@
-import { g, auth, config } from '@grafbase/sdk';
+import { graph, config, connector, auth } from '@grafbase/sdk';
+
+const g = graph.Standalone();
+
+const mongo = connector.MongoDB('MongoDB', {
+  url: g.env('MONGODB_API_URL'),
+  apiKey: g.env('MONGODB_API_KEY'),
+  dataSource: g.env('MONGODB_DATASOURCE'),
+  database: g.env('MONGODB_DATABASE'),
+});
+
+g.datasource(mongo);
+
+const user = g.type('UserType', {
+  name: g.string(),
+  email: g.string(),
+  avatarUrl: g.url(),
+  description: g.string().optional(),
+  githubUrl: g.url().optional(),
+  linkedinUrl: g.url().optional(),
+});
+
+const project = g.type('ProjectType', {
+  title: g.string(),
+  description: g.string(),
+  image: g.url(),
+  liveSiteUrl: g.url(),
+  githubUrl: g.url(),
+  category: g.string(),
+});
+
 // @ts-ignore
-const User = g
+mongo
   .model('User', {
     name: g.string().length({ min: 2, max: 20 }),
     email: g.string().unique(),
@@ -8,25 +38,19 @@ const User = g
     description: g.string().optional(),
     githubUrl: g.url().optional(),
     linkedinUrl: g.url().optional(),
-    projects: g
-      .relation(() => Project)
-      .list()
-      .optional(),
+    projects: g.ref(project).list().optional(),
   })
-  .auth((rules) => {
-    rules.public().read();
-  });
+  .auth((rules) => rules.private().read());
 
-// @ts-ignore
-const Project = g
+mongo
   .model('Project', {
     title: g.string().length({ min: 3 }),
     description: g.string(),
     image: g.url(),
     liveSiteUrl: g.url(),
     githubUrl: g.url(),
-    category: g.string().search(),
-    createdBy: g.relation(() => User),
+    category: g.string().search().unique(),
+    createdBy: g.ref(user),
   })
   .auth((rules) => {
     rules.public().read();
@@ -39,6 +63,6 @@ const jwt = auth.JWT({
 });
 
 export default config({
-  schema: g,
+  graph: g,
   auth: { providers: [jwt], rules: (rules) => rules.private() },
 });
