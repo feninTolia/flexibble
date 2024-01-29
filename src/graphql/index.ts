@@ -33,7 +33,7 @@ export const deleteProjectMutation = `
 export const allProjectsQuery = `
 query GetAllProjects ($endCursor: String) {
   mongoDB {
-    projectCollection(first: 15, after: $endCursor) {
+    projectCollection(first: 30, after: $endCursor) {
          pageInfo {
          hasNextPage
          hasPreviousPage
@@ -64,7 +64,7 @@ query GetAllProjects ($endCursor: String) {
 export const projectsQuery = `
  query getProjects($category: String, $endCursor: String) {
     mongoDB {
-  projectCollection(first: 15, after: $endCursor, filter: {category: {eq: $category}}) {
+  projectCollection(first: 30, after: $endCursor, filter: {category: {eq: $category}}) {
       pageInfo {
         hasNextPage
         hasPreviousPage
